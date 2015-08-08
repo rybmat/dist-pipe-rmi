@@ -1,4 +1,6 @@
 *.class
+dist-pipe/out
+dist-pipe/out/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

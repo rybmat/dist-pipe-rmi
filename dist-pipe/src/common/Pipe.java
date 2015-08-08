@@ -8,5 +8,5 @@ import java.rmi.RemoteException;
 
 public interface Pipe extends Remote {
     <T> void put(Message<T> m) throws RemoteException, PipeFullException;
-    <T> T get() throws RemoteException, PipeEmtyException;
+    <T> Message<T> get() throws RemoteException, PipeEmtyException;
 }
