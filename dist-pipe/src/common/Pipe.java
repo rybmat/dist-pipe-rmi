@@ -7,6 +7,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface Pipe extends Remote {
-    <T> void put(Message<T> m) throws RemoteException, PipeFullException;
-    <T> Message<T> get() throws RemoteException, PipeEmtyException;
+    <T> void put(String pipeName, Message<T> m, boolean close) throws RemoteException, PipeFullException, PipeClosedException;
+    <T> Message<T> get(String pipeName) throws RemoteException, PipeEmtyException, PipeClosedException;
 }

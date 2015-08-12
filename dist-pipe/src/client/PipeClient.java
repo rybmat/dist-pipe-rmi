@@ -11,20 +11,24 @@ public class PipeClient {
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }
+
+        if (args.length < 3) {
+            System.out.println("Usage: \njava PipeClient put <pipe name> <message> <close pipe (true/false)> \njava PipeClient get <pipe name>");
+        }
+
         try {
             String name = "Pipe";
             Registry registry = LocateRegistry.getRegistry("localhost");
             Pipe pipe = (Pipe) registry.lookup(name);
 
-//            Message<String> msg = new client.Message<>();
-//            msg.set("fsdafsadfa");
-//            pipe.put(msg);
-
-            Message<String> msg = pipe.get();
-            System.out.println(msg.get());
-
-//            Pi task = new Pi(Integer.parseInt(args[1]));
-//            BigDecimal pi = comp.executeTask(task);
+            if (args[0].equals("put")) {
+                Message<String> msg = new client.Message<>();
+                msg.set(args[2]);
+                pipe.put(args[1], msg, Boolean.parseBoolean(args[3]));
+            } else {
+                Message<String> msg = pipe.get(args[1]);
+                System.out.println(msg.get());
+            }
             System.out.println("done");
         } catch (Exception e) {
             System.err.println("exception:");
