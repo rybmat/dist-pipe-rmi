@@ -12,7 +12,7 @@ public class PipeClient {
             System.setSecurityManager(new SecurityManager());
         }
 
-        if (args.length < 3) {
+        if (args.length < 1) {
             System.out.println("Usage: \njava PipeClient put <pipe name> <message> <close pipe (true/false)> \njava PipeClient get <pipe name>");
         }
 
@@ -27,9 +27,15 @@ public class PipeClient {
                 pipe.put(args[1], msg, Boolean.parseBoolean(args[3]));
             } else {
                 Message<String> msg = pipe.get(args[1]);
-                System.out.println(msg.get());
+                System.out.println("Got message: " + msg.get());
             }
             System.out.println("done");
+        } catch (PipeClosedException e) {
+            System.out.println("Pipe " + args[1] + " was closed by sender or never existed");
+        } catch (PipeFullException e) {
+            System.out.println("Pipe " + args[1] + " is full.");
+        } catch (PipeEmtyException e) {
+            System.out.println("Pipe " + args[1] + " is empty.");
         } catch (Exception e) {
             System.err.println("exception:");
             e.printStackTrace();
